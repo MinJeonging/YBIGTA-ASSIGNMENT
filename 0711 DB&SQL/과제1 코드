@@ -12,8 +12,9 @@ ORDER BY SUM(OD.Quantity*P.Price) DESC;
 
 SELECT C.CategoryName, SUM(OD.Quantity) AS '판매량', SUM(OD.Quantity*P.Price) AS '판매금액'
 FROM CATEGORIES AS C
- JOIN PRODUCTS AS P ON C.CategoryID = P.CategoryID
-    JOIN ORDERDETAILS AS OD ON P.ProductID = OD.ProductID JOIN ORDERS AS O ON OD.OrderID = O.OrderID
+    JOIN PRODUCTS AS P ON C.CategoryID = P.CategoryID
+    JOIN ORDERDETAILS AS OD ON P.ProductID = OD.ProductID 
+    JOIN ORDERS AS O ON OD.OrderID = O.OrderID
 GROUP BY C.CategoryID
 HAVING SUM(OD.Quantity)>=2000
 ORDER BY SUM(OD.Quantity) DESC;
