@@ -1,0 +1,19 @@
+1)	전체 구매 고객에 대하여 고객별 총 구매 금액 출력하기
+
+SELECT O.OrderID, C.CustomerName, SUM(OD.Quantity) AS '구매량', SUM(OD.Quantity*P.Price) AS '구매금액'
+FROM ORDERS AS O
+    JOIN CUSTOMERS AS C ON O.CustomerID=C.CustomerID
+    JOIN OrderDetails AS OD ON O.OrderID = OD.OrderID
+    JOIN Products AS P ON OD.ProductID = P.ProductID
+GROUP BY C.CustomerID
+ORDER BY SUM(OD.Quantity*P.Price) DESC;
+
+2)	2000개 이상의 판매가 이루어진 상품의 카테고리 이름과 총 판매량, 총 판매 금액 출력하기
+
+SELECT C.CategoryName, SUM(OD.Quantity) AS '판매량', SUM(OD.Quantity*P.Price) AS '판매금액'
+FROM CATEGORIES AS C
+ JOIN PRODUCTS AS P ON C.CategoryID = P.CategoryID
+    JOIN ORDERDETAILS AS OD ON P.ProductID = OD.ProductID JOIN ORDERS AS O ON OD.OrderID = O.OrderID
+GROUP BY C.CategoryID
+HAVING SUM(OD.Quantity)>=2000
+ORDER BY SUM(OD.Quantity) DESC;
